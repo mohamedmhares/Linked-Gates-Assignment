@@ -20,7 +20,7 @@ A web application for managing devices, including functionalities to create, edi
 
 ## Setup Instructions
 
-1. **Clone the repository**:
+**Clone the repository**:
    git clone https://github.com/mohamedmhares/Linked-Gates-Assignment.git
    cd your BreadcrumbsLinked-Gates-Assignment
 - Install dependencies: Ensure you have the latest version of .NET Core SDK installed. Use the following command to restore dependencies:
@@ -33,7 +33,7 @@ A web application for managing devices, including functionalities to create, edi
 - Run the application:
   . dotnet run
 
-### 5. Usage
+### Usage
 ```markdown
 ## Usage
 
