@@ -1,0 +1,108 @@
+﻿@model LG_Assignment.Application.Dtos.DeviceDto
+
+@{
+    ViewData["Title"] = "Create Device";
+}
+
+<h1>Create Device</h1>
+
+<form method="post" asp-action="Create">
+    <div>
+        <label asp-for="Name">Device Name</label>
+        <input class="form form-control" asp-for="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="SerialNo">Serial Number</label>
+        <input class="form form-control" asp-for="SerialNo" />
+        <span asp-validation-for="SerialNo" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="AcquisitionDate">Acquisition Date</label>
+        <input type="date" class="form form-control" asp-for="AcquisitionDate" />
+        <span asp-validation-for="AcquisitionDate" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Memo">Memo</label>
+        <textarea class="form form-control" asp-for="Memo"></textarea>
+        <span asp-validation-for="Memo" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="DeviceCategoryId">Device Category</label>
+        <select class="form-control" asp-for="DeviceCategoryId" asp-items="ViewBag.Categories" onchange="loadProperties(this.value)">
+            <option value="">Select Category</option>
+        </select>
+        <span asp-validation-for="DeviceCategoryId" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Property Values</label>
+        <div id="property-values-list">
+            @if (ViewBag.PropertyItems != null && ViewBag.PropertyItems.Count > 0)
+            {
+                foreach (var property in ViewBag.PropertyItems)
+                {
+                    <div class="form-group">
+                        <label>@property.Description</label>
+                        @{
+                            var value = property?.Id != null? Model.propertyValueDTOs.FirstOrDefault(x => x.Id == property.Id)?.Value ?? string.Empty : string.Empty;
+                        }
+                        <input type="text" value="@value" name="@property.Id" class="form-control" placeholder="Enter value for @property.Description" />
+                    </div>
+                }
+            }
+            else
+            {
+                <div>No properties available for the selected category.</div>
+            }
+        </div>
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-success" />
+</form>
+
+<a asp-action="Index" class="btn btn-secondary">Back to list</a>
+@section Scripts {
+    <script>
+        function loadProperties(categoryId) {
+            $.ajax({
+                url: '@Url.Action("GetProperties", "Device")',
+                type: 'GET',
+                data: { categoryId: categoryId },
+                success: function (data) {
+                    $('#property-values-list').empty(); // Clear previous entries
+                    console.log(data);
+                    if (data.length > 0) {
+                        for (let i = 0; i < data.length; i++) {
+                            const property = data[i];
+                            $('#property-values-list').append(`
+                                        <div class="form-group">
+                                            <label>${property.description}</label>
+                                            <input type="text" name="propertyValueDTOs[${i}].Value" class="form-control" placeholder="Enter value for ${property.description}" />
+                                            <input type="hidden" name="propertyValueDTOs[${i}].Id" value="${property.id}" />
+                                        </div>
+                                    `);
+                        }
+                    } else {
+                        $('#property-values-list').append('<div>No properties available for the selected category.</div>');
+                    }
+                },
+                error: function () {
+                    console.error("Error loading properties");
+                }
+            });
+        }
+
+        // Automatically load properties for the first category on page load
+        $(document).ready(function () {
+            const firstCategoryId = $('#DeviceCategoryId').val();
+            if (firstCategoryId) {
+                loadProperties(firstCategoryId);
+            }
+        });
+    </script>
+}

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<LG_Assignment.Core.Entity.DeviceCategory>
+
+@{
+    ViewData["Title"] = "Device Categories";
+}
+
+<h1>Device Categories</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Properties</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>
+                    <ul>
+                        @if (category.PropertyItems != null && category.PropertyItems.Any())
+                        {
+                            foreach (var propertyItem in category.PropertyItems)
+                            {
+                                <li>@propertyItem.Description</li>
+                            }
+                        }
+                        else
+                        {
+                            <li>No properties available</li>
+                        }
+                    </ul>
+                </td>
+               
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" asp-controller="DeviceCategory" class="btn btn-success">Add New Category</a>

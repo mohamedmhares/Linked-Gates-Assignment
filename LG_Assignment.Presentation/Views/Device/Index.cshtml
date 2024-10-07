@@ -1,0 +1,40 @@
+﻿@model IEnumerable<LG_Assignment.Core.Entity.Device>
+
+@{
+    ViewData["Title"] = "Devices";
+}
+
+<h1>Devices</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Serial No</th>
+            <th>Category</th>
+            <th>Properties</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var device in Model)
+        {
+            <tr>
+                <td>@device.Name</td>
+                <td>@device.SerialNo</td>
+                <td>@device.DeviceCategory?.Name</td>
+                <td>
+                    <ul>
+                        @foreach (var propertyValue in device.PropertyValues)
+                        {
+                            <li>@propertyValue.PropertyItem.Description: @propertyValue.Value</li>
+                        }
+                    </ul>
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" asp-controller="Device" class="btn btn-success">Add New Device</a>

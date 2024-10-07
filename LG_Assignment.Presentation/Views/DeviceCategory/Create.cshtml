@@ -1,0 +1,47 @@
+﻿@model LG_Assignment.Core.Entity.DeviceCategory
+
+@{
+    ViewData["Title"] = "Create Device Category";
+}
+
+<h1>Create Device Category</h1>
+
+<form method="post" asp-action="Create" asp-controller="DeviceCategory">
+    <div>
+        <label asp-for="Name">Category Name</label>
+        <input class="form form-control" asp-for="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Properties</label>
+        <div id="property-items-list">
+            <input type="text" name="propertyDescriptions" class="form-control" placeholder="Property Description" />
+        </div>
+        <button type="button" id="add-property-btn" class="btn btn-primary">Add Property</button>
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-success" />
+</form>
+
+<a asp-action="Index" asp-controller="DeviceCategory">Back to list</a>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let propertyIndex = 0;
+
+            // Add property button handler
+            $('#add-property-btn').click(function () {
+                propertyIndex++;
+                const propertyItem = `
+                            <input type="text" name="propertyDescriptions" class="form-control" placeholder="Property Description" />
+                        `;
+                $('#property-items-list').append(propertyItem);
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
