@@ -18,7 +18,7 @@ A web application for managing devices, including functionalities to create, edi
 - Delete devices with confirmation.
 - Manage device categories and their associated properties.
 
-  ## Setup Instructions
+## Setup Instructions
 
 1. **Clone the repository**:
    git clone https://github.com/mohamedmhares/Linked-Gates-Assignment.git
@@ -34,8 +34,6 @@ A web application for managing devices, including functionalities to create, edi
   . dotnet run
 
 ### 5. Usage
-Include how to use the application after it has been set up.
-
 ```markdown
 ## Usage
 
@@ -49,10 +47,6 @@ Include how to use the application after it has been set up.
 - Infrastructure/: Data access implementations, repositories, and DbContext.
 - Application/: Contains service implementations and business logic.
 
-### 7. Contribution Guidelines
-If you plan to allow others to contribute to your project, provide guidelines.
-
-```markdown
 ## Contribution Guidelines
 
 1. Fork the repository.
